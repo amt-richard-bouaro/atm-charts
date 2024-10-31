@@ -16,7 +16,10 @@ auth:
 
 # Kubernetes Service Configuration for Internal Exposure
 service:
+  name: atm-kafka
   type: ClusterIP                    # Internal ClusterIP service for intra-cluster communication.
+  port: 9092
+  targetPort: 9092
 
 # External Broker Access Configuration
 externalAccess:
