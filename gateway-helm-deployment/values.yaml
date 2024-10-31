@@ -109,7 +109,7 @@ env:
   SERVER_PORT: 8883
   APPLICATION_NAME: ATM-api-gateway
   CONFIG_SERVER_HOST: atm-config-server
-  CONFIG_SERVER_PORT: 8081
+  CONFIG_SERVER_PORT: 8881
   SPRING_PROFILES_ACTIVE: gateway-dev
   EUREKA_SERVER_DEFAULT_ZONE: http://atm-discovery-server:8882/eureka/
   EUREKA_INSTANCE_HOSTNAME: atm-discovery-server
