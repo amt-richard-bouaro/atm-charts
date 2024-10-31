@@ -69,5 +69,5 @@ env:
   EXTERNAL_BANK_API_BASE_URL: https://cyclos.amalitech-dev.net/bankatmcore/api/
   SERVER_PORT: 8884
   IPINFO_ACCESS_TOKEN: bb97ef9c4187b1
-  CONFIG_SERVER_URL: "http://atm-config-server:8081"
+  CONFIG_SERVER_URL: "http://atm-config-server:8881"
   SPRING_PROFILES_ACTIVE: "user-management-service-dev"

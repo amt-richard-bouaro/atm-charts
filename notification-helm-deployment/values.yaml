@@ -59,7 +59,7 @@ env:
   ZIPKIN_TRACING_ENDPOINT: http://atm-zipkin:9411
   SERVICE_NAME: atm-notification-management-service
   SERVER_PORT: 8886
-  CONFIG_SERVER_URL: "http://atm-config-server:8081"
+  CONFIG_SERVER_URL: "http://atm-config-server:8881"
   SPRING_PROFILES_ACTIVE: "notification-service-dev"
 
 

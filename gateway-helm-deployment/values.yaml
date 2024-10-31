@@ -113,7 +113,7 @@ env:
   SPRING_PROFILES_ACTIVE: gateway-dev
   EUREKA_SERVER_DEFAULT_ZONE: http://atm-discovery-server:8882/eureka/
   EUREKA_INSTANCE_HOSTNAME: atm-discovery-server
-  CONFIG_SERVER_URL: "http://atm-config-server:8081"
+  CONFIG_SERVER_URL: "http://atm-config-server:8881"
   ZIPKIN_TRACING_ENDPOINT: "http://atm-zipkin:9411"
   ATM_DISCOVERY_SERVER: http://atm-discovery-server:8882
   ATM_USER_MANAGEMENT_SERVICE_NAME: "atm-user-management-service"

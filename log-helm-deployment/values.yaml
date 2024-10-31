@@ -73,7 +73,7 @@ env:
   ZIPKIN_TRACING_ENDPOINT: http://atm-zipkin:9411
   SERVICE_NAME: atm-log-management-service
   SERVER_PORT: 8885
-  CONFIG_SERVER_URL: "http://atm-config-server:8081"
+  CONFIG_SERVER_URL: "http://atm-config-server:8881"
   SPRING_PROFILES_ACTIVE: "log-management-service-dev"
 
   # MongoDB Configuration
