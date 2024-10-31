@@ -51,7 +51,7 @@ securityContext: {}
 
 # This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
 service:
-  name: "atm-zipkin"
+  name: atm-zipkin
   type: NodePort
   port: 9411
   targetPort: 9411
