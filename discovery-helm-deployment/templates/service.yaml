@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "discovery-helm-deployment.fullname" . }}
+  labels:
+    {{- include "discovery-helm-deployment.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort }}
+      protocol: TCP
+      name: atm-discovery-server
+  selector:
+    {{- include "discovery-helm-deployment.selectorLabels" . | nindent 4 }}
