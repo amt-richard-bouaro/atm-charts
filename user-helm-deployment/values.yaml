@@ -63,7 +63,7 @@ mongodb:
 env:
   EUREKA_SERVER_DEFAULT_ZONE: http://atm-discovery-server:8882/eureka/
   EUREKA_INSTANCE_HOSTNAME: atm-discovery-server
-  ZIPKIN_TRACING_ENDPOINT: http://localhost:9490
+  ZIPKIN_TRACING_ENDPOINT: http://atm-zipkin:9411
   SERVICE_NAME: atm-user-management-service
   EXTERNAL_BANK_API_NAME: cyclos-api
   EXTERNAL_BANK_API_BASE_URL: https://cyclos.amalitech-dev.net/bankatmcore/api/
@@ -71,3 +71,4 @@ env:
   IPINFO_ACCESS_TOKEN: bb97ef9c4187b1
   CONFIG_SERVER_URL: "http://atm-config-server:8881"
   SPRING_PROFILES_ACTIVE: "user-management-service-dev"
+  KAFKA_SERVERS: "cluster-kafka-controller-0.cluster-kafka-controller-headless.default.svc.cluster.local:9092,cluster-kafka-controller-1.cluster-kafka-controller-headless.default.svc.cluster.local:9092,cluster-kafka-controller-2.cluster-kafka-controller-headless.default.svc.cluster.local:9092"

@@ -65,6 +65,8 @@ spec:
               value: "{{ .Values.env.MONGODB_PORT }}"
             - name: MONGODB_DATABASE
               value: "{{ .Values.env.MONGODB_DATABASE }}"
+            - name:  KAFKA_SERVERS
+              value: "{{ .Values.env.KAFKA_SERVERS }}"
           livenessProbe:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:

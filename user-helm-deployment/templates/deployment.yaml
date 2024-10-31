@@ -61,7 +61,8 @@ spec:
               value: "{{ .Values.env.CONFIG_SERVER_URL }}"
             - name: PRING_PROFILES_ACTIVE
               value: "{{ .Values.env.SPRING_PROFILES_ACTIVE }}"
-
+            - name: KAFKA_SERVERS
+              value: "{{ .Values.env.KAFKA_SERVERS }}"
           livenessProbe:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:
