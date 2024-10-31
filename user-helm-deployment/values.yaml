@@ -71,4 +71,4 @@ env:
   IPINFO_ACCESS_TOKEN: bb97ef9c4187b1
   CONFIG_SERVER_URL: "http://atm-config-server:8881"
   SPRING_PROFILES_ACTIVE: "user-management-service-dev"
-  KAFKA_SERVERS: "kafka.atm-microservices.svc.cluster.local:9092"
+  KAFKA_SERVERS: "atm-kafka.atm-microservices.svc.cluster.local:9092"
