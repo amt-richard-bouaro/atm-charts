@@ -14,9 +14,9 @@ spec:
     helm:
       valueFiles:
         - kafka/values.yaml
-destination:
-  server: 'https://kubernetes.default.svc'
-  namespace: atm-microservices
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: atm-microservices
   syncPolicy:
     automated:
       prune: true
