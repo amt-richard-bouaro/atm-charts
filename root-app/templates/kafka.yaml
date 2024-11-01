@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: atm-kafka-v2
+  name: atm-kafka
   namespace: atm-microservices
   finalizers:
     - resources-finalizer.argocd.argoproj.io
