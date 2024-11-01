@@ -2,22 +2,28 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: atm-kafka
+  namespace: atm-microservices
   finalizers:
     - resources-finalizer.argocd.argoproj.io
-  namespace: atm-microservices
 spec:
   project: default
   source:
-    repoURL: https://github.com/amt-richard-bouaro/atm-charts.git
-    path: kafka/
-    targetRevision: HEAD
-    chart: oci://registry-1.docker.io/bitnamicharts/kafka
+    repoURL: oci://registry-1.docker.io/bitnamicharts
+    chart: kafka
+    targetRevision: 3.3.1-debian-11-r11
     helm:
-      valueFiles:
-        - values.yaml
+      values: |-
+        replicaCount: 3
+        service:
+          name: atm-kafka
+          type: ClusterIP
+          port: 9092
+        persistence:
+          enabled: true
+          size: 2Gi
   destination:
+    server: https://kubernetes.default.svc
     namespace: atm-microservices
-    server: 'https://kubernetes.default.svc'
   syncPolicy:
     automated:
       prune: true
