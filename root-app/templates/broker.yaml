@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: atm-kafka
+  name: atm-kafka-v2
   namespace: atm-microservices
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
-    repoURL: 'https://charts.bitnami.com/bitnami'
+    repoURL: https://charts.bitnami.com/bitnami
     targetRevision: HEAD
     chart: kafka
     helm:
