@@ -4,15 +4,20 @@ metadata:
   name: atm-kafka
   finalizers:
     - resources-finalizer.argocd.argoproj.io
+  namespace: atm-microservices
 spec:
-  project: default #maintain
+  project: default
   source:
     repoURL: https://github.com/amt-richard-bouaro/atm-charts.git
     path: kafka/
     targetRevision: HEAD
+    chart: oci://registry-1.docker.io/bitnamicharts/kafka
+    helm:
+      valueFiles:
+        - values.yaml
   destination:
-    server: https://kubernetes.default.svc
     namespace: atm-microservices
+    server: 'https://kubernetes.default.svc'
   syncPolicy:
     automated:
       prune: true
