@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/amt-richard-bouaro/atm-charts.git
     path: kafka/
-    targetRevision: HEAD
+    targetRevision: main
     chart: oci://registry-1.docker.io/bitnamicharts/kafka
     helm:
       valueFiles:
