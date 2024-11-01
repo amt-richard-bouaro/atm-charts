@@ -8,22 +8,15 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: oci://registry-1.docker.io/bitnamicharts/kafka
+    repoURL: 'https://charts.bitnami.com/bitnami'
+    targetRevision: HEAD
     chart: kafka
-    targetRevision: 3.8.1
     helm:
-      values: |-
-        replicaCount: 3
-        service:
-          name: atm-kafka
-          type: ClusterIP
-          port: 9092
-        persistence:
-          enabled: true
-          size: 2Gi
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: atm-microservices
+      valueFiles:
+        - kafka/values.yaml
+destination:
+  server: 'https://kubernetes.default.svc'
+  namespace: atm-microservices
   syncPolicy:
     automated:
       prune: true
