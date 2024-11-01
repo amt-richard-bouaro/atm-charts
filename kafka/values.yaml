@@ -30,11 +30,11 @@ persistence:
 
 # Disabling Zookeeper as KRaft mode does not require it
 zookeeper:
-  enabled: false
+  enabled: true
 
 # KRaft Mode Configuration
 kraft:
-  enabled: true
+  enabled: false
   clusterId: "vKaEBaltQuqktgAA3wkccA"  # Unique cluster ID for KRaft
 
 # Health checks for better stability
