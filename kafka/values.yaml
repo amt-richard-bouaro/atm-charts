@@ -1,4 +1,4 @@
-# Kafka configuration for KRaft mode on Kubernetes
+# Kafka configuration on Kubernetes with ZooKeeper
 
 # Cluster Configuration
 replicaCount: 3  # Number of Kafka broker replicas for high availability
@@ -22,32 +22,44 @@ externalAccess:
       type: NodePort
       nodePorts: [31090, 31091, 31092]  # Ports for external access
 
-# Persistence settings for data storage
+# Persistence settings for Kafka data storage
 persistence:
   enabled: true
+  accessModes: ["ReadWriteOnce"]
   storageClass: "standard"  # Set to your Kubernetes storage class
   size: 2Gi  # Disk space per broker
+  mountPath: /bitnami/kafka
+  existingClaim: ""
 
-# Disabling Zookeeper as KRaft mode does not require it
+# Enable ZooKeeper
 zookeeper:
   enabled: true
+  volumePermissions:
+    enabled: true
+  persistence:
+    enabled: true
+    accessModes: ["ReadWriteOnce"]
+    storageClass: "standard"
+    size: 2Gi  # Disk space for ZooKeeper storage
+    dataLogDir:
+      size: 1Gi  # Separate storage for transaction logs (optional)
 
-# KRaft Mode Configuration
+# KRaft Mode Configuration (Disabled for ZooKeeper)
 kraft:
   enabled: false
-  clusterId: "vKaEBaltQuqktgAA3wkccA"  # Unique cluster ID for KRaft
+  # clusterId is not required when KRaft is disabled
 
 # Health checks for better stability
 livenessProbe:
-  initialDelaySeconds: 30
+  initialDelaySeconds: 120
   periodSeconds: 15
-  timeoutSeconds: 5
+  timeoutSeconds: 10
   failureThreshold: 6
   successThreshold: 2
 
 readinessProbe:
-  initialDelaySeconds: 30
+  initialDelaySeconds: 120
   periodSeconds: 15
-  timeoutSeconds: 5
+  timeoutSeconds: 10
   failureThreshold: 6
   successThreshold: 2
