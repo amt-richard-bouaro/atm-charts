@@ -8,13 +8,17 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/amt-richard-bouaro/atm-charts.git
-    path: kafka/
-    targetRevision: main
     chart: oci://registry-1.docker.io/bitnamicharts/kafka
     helm:
-      valueFiles:
-        - values.yaml
+      values: |-
+        replicaCount: 3
+        service:
+          name: atm-kafka
+          type: ClusterIP
+          port: 9092
+        persistence:
+          enabled: true
+          size: 2Gi
   destination:
     namespace: atm-microservices
     server: 'https://kubernetes.default.svc'
