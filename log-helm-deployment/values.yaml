@@ -75,7 +75,7 @@ env:
   SERVER_PORT: 8885
   CONFIG_SERVER_URL: "http://atm-config-server:8881"
   SPRING_PROFILES_ACTIVE: "log-management-service-dev"
-  KAFKA_SERVERS: "kafka.atm-microservices.svc.cluster.local:9092"
+  KAFKA_SERVERS: "atm-kafka.atm-microservices.svc.cluster.local:9092"
 
   # MongoDB Configuration
   MONGODB_USERNAME: "admin"
