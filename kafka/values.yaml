@@ -1,7 +1,7 @@
 # Kafka configuration on Kubernetes with ZooKeeper
 
 # Cluster Configuration
-replicaCount: 3  # Number of Kafka broker replicas for high availability
+replicaCount: 2  # Number of Kafka broker replicas for high availability
 
 # Authentication
 auth:
