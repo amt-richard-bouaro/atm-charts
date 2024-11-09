@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: amtrbouaro/atm-config-server
-  pullPolicy: IfNotPresent
+  pullPolicy: Always #IfNotPresent
   tag: "latest"
 
 # This is for the secretes for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
