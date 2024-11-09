@@ -5,10 +5,10 @@ postgresql:
       postgresqlPassword: admin
       postgresqlUsername: admin
       postgresqlDatabase: atm-microservices-db
-#      auth:
-#        username: "admin"
-#        password: "admin"
-#        database: "atm-microservices-db"
+      auth:
+        username: "admin"
+        password: "admin"
+        database: "atm-microservices-db"
       servicePort: 4004
 
   livenessProbe:

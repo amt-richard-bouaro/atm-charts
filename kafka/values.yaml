@@ -33,7 +33,8 @@ kafka:
     size: 2Gi  # Disk space per broker
     mountPath: /bitnami/kafka
     existingClaim: ""
-
+  volumePermissions:
+    enabled: true
   # Enable ZooKeeper
   zookeeper:
     enabled: true
