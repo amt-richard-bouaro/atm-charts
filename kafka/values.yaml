@@ -1,0 +1,80 @@
+
+kafka:
+  # Kafka configuration on Kubernetes with ZooKeeper
+
+  # Cluster Configuration
+  replicaCount: 3 # Number of Kafka broker replicas for high availability
+
+  # Authentication
+  auth:
+    enabled: false  # Enable authentication using SASL/PLAIN or SSL/TLS
+    clientProtocol: plaintext
+    interBrokerProtocol: plaintext
+
+  # Service configuration for internal access
+  service:
+    name: atm-kafka
+    type: ClusterIP
+    port: 9092
+
+  # External access configuration
+  externalAccess:
+    enabled: false
+    controller:
+      service:
+        type: NodePort
+        nodePorts: [31090, 31091, 31092]  # Ports for external access
+
+  # Persistence settings for Kafka data storage
+  persistence:
+    enabled: true
+    accessModes: ["ReadWriteOnce"]
+    storageClass: "standard"  # Set to your Kubernetes storage class
+    size: 2Gi  # Disk space per broker
+    mountPath: /bitnami/kafka
+    existingClaim: ""
+
+  # Enable ZooKeeper
+  zookeeper:
+    enabled: true
+    volumePermissions:
+      enabled: true
+    persistence:
+      enabled: true
+      accessModes: ["ReadWriteOnce"]
+      storageClass: "standard"
+      size: 2Gi  # Disk space for ZooKeeper storage
+      dataLogDir:
+        size: 1Gi  # Separate storage for transaction logs (optional)
+  controller:
+    replicaCount: 0
+  listeners:
+    client:
+      protocol: PLAINTEXT
+    controller:
+      protocol: PLAINTEXT
+    interbroker:
+      protocol: PLAINTEXT
+    external:
+      protocol: PLAINTEXT
+  broker:
+    replicaCount: 3
+  # KRaft Mode Configuration (Disabled for ZooKeeper)
+  kraft:
+    enabled: false
+    # clusterId is not required when KRaft is disabled
+
+  # Health checks for better stability
+  livenessProbe:
+    initialDelaySeconds: 120
+    periodSeconds: 15
+    timeoutSeconds: 10
+    failureThreshold: 6
+    successThreshold: 2
+
+  readinessProbe:
+    initialDelaySeconds: 120
+    periodSeconds: 15
+    timeoutSeconds: 10
+    failureThreshold: 6
+    successThreshold: 2

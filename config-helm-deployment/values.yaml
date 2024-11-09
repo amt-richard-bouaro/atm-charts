@@ -1,0 +1,50 @@
+replicaCount: 1
+
+image:
+  repository: amtrbouaro/atm-config-server
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+# This is for the secretes for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true # Specifies whether a service account should be created
+  automount: true # Automatically mount a ServiceAccount's API credentials?
+  annotations: {} # Annotations to add to the service account
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+podLabels: {}
+podSecurityContext: {}
+# fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+# runAsNonRoot: true
+# runAsUser: 1000
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+service:
+  name: atm-config-server
+  type: ClusterIP
+  port: 8881
+  targetPort: 8881
+
+env:
+  SERVER_PORT: "8881"
+
+

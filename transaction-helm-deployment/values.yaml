@@ -1,0 +1,65 @@
+
+# This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
+replicaCount: 1
+
+# This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
+image:
+  repository: amtrbouaro/atm-transaction-management-service
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+# This is for the secretes for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+#This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
+serviceAccount:
+  create: true # Specifies whether a service account should be created
+  automount: true # Automatically mount a ServiceAccount's API credentials?
+  annotations: {} # Annotations to add to the service account
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+# This is for setting Kubernetes Annotations to a Pod.
+# For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+podAnnotations: {}
+podLabels: {}
+podSecurityContext: {}
+# fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+#   - ALL
+# readOnlyRootFilesystem: true
+# runAsNonRoot: true
+# runAsUser: 1000
+
+# This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
+service:
+  name: atm-transaction-management-service
+  type: ClusterIP
+  port: 8888
+  targetPort: 8888
+  nodePort: 328868
+
+#This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 70
+  # targetMemoryUtilizationPercentage: 80
+
+env:
+  EUREKA_SERVER_DEFAULT_ZONE: http://atm-discovery-server.atm-microservices.svc.cluster.local:8882/eureka/
+  EUREKA_INSTANCE_HOSTNAME: atm-discovery-server.atm-microservices.svc.cluster.local
+  ZIPKIN_TRACING_ENDPOINT: http://atm-zipkin.atm-microservices.svc.cluster.local:9411
+  SERVICE_NAME: atm-transaction-management-service
+  SERVER_PORT: 8886
+  CONFIG_SERVER_URL: "http://atm-config-server.atm-microservices.svc.cluster.local:8881"
+  SPRING_PROFILES_ACTIVE: "transaction-management-service-dev"
+
+

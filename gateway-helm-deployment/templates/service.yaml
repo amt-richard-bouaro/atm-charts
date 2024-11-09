@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "gateway-helm-deployment.fullname" . }}
+  labels:
+    {{- include "gateway-helm-deployment.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort }}
+      protocol: TCP
+      name: atm-api-gateway
+  selector:
+    {{- include "gateway-helm-deployment.selectorLabels" . | nindent 4 }}

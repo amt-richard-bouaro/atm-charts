@@ -1,0 +1,106 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "user-helm-deployment.fullname" . }}
+  labels:
+    {{- include "user-helm-deployment.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "user-helm-deployment.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "user-helm-deployment.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "user-helm-deployment.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          env:
+            - name: EUREKA_SERVER_DEFAULT_ZONE
+              value: "{{ .Values.env.EUREKA_SERVER_DEFAULT_ZONE }}"
+            - name: EUREKA_INSTANCE_HOSTNAME
+              value: "{{ .Values.env.EUREKA_INSTANCE_HOSTNAME }}"
+            - name: ZIPKIN_TRACING_ENDPOINT
+              value: "{{ .Values.env.ZIPKIN_TRACING_ENDPOINT }}"
+            - name: SERVICE_NAME
+              value: "{{ .Values.env.SERVICE_NAME }}"
+            - name: EXTERNAL_BANK_API_NAME
+              value: "{{ .Values.env.EXTERNAL_BANK_API_NAME }}"
+            - name: EXTERNAL_BANK_API_BASE_URL
+              value: "{{ .Values.env.EXTERNAL_BANK_API_BASE_URL }}"
+            - name: SERVER_PORT
+              value: "{{ .Values.env.SERVER_PORT }}"
+            - name: IPINFO_ACCESS_TOKEN
+              value: "{{ .Values.env.IPINFO_ACCESS_TOKEN }}"
+            - name: CONFIG_SERVER_URL
+              value: "{{ .Values.env.CONFIG_SERVER_URL }}"
+            - name: PRING_PROFILES_ACTIVE
+              value: "{{ .Values.env.SPRING_PROFILES_ACTIVE }}"
+            - name: KAFKA_SERVERS
+              value: "{{ .Values.env.KAFKA_SERVERS }}"
+            - name: DATASOURCE_URL
+              value: {{ .Values.env.DATASOURCE_URL}}
+            - name: DATABASE_USERNAME
+              value: "{{ .Values.env.DATABASE_USERNAME }}"
+            - name: DATABASE_PASSWORD
+              value: "{{ .Values.env.DATABASE_PASSWORD }}"
+            - name: JWT_ACCESS_SECRET_KEY
+              value: "{{ .Values.env.JWT_ACCESS_SECRET_KEY }}"
+            - name: JWT_REFRESH_SECRET_KEY
+              value: "{{ .Values.env.JWT_REFRESH_SECRET_KEY }}"
+            - name: JWT_ACCESS_TOKEN_EXPIRATION
+              value: "{{ .Values.env.JWT_ACCESS_TOKEN_EXPIRATION }}"
+            - name: JWT_REFRESH_TOKEN_EXPIRATION
+              value: "{{ .Values.env.JWT_REFRESH_TOKEN_EXPIRATION }}"
+
+          livenessProbe:
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          {{- with .Values.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with .Values.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

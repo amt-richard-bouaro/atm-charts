@@ -1,0 +1,97 @@
+# values.yaml for Kafka on Kubernetes using Helm in KRaft mode
+
+# Cluster Configuration
+replicaCount: 3                      # Number of Kafka broker replicas for high availability.
+
+# Docker Image Configuration
+image:
+  registry: docker.io
+  repository: bitnami/kafka
+  tag: 3.6
+
+# Authentication Configuration
+auth:
+  clientProtocol: plaintext
+  interBrokerProtocol: plaintext
+
+# Kubernetes Service Configuration for Internal Exposure
+service:
+  name: atm-kafka
+  type: ClusterIP                    # Internal ClusterIP service for intra-cluster communication.
+  port: 9092
+  targetPort: 9092
+
+# External Broker Access Configuration
+externalAccess:
+  enabled: true
+  controller:
+    service:
+      type: NodePort
+      nodePorts: [31090, 31091, 31092]  # NodePorts for external broker access per Kafka instance.
+
+
+
+
+
+# Health Checks
+livenessProbe:
+  initialDelaySeconds: 30
+  periodSeconds: 15
+  timeoutSeconds: 5
+  failureThreshold: 6
+  successThreshold: 2
+
+readinessProbe:
+  initialDelaySeconds: 30
+  periodSeconds: 15
+  timeoutSeconds: 5
+  failureThreshold: 6
+  successThreshold: 2
+
+# Persistence Configuration for Kafka Data Storage
+persistence:
+  enabled: true
+  storageClass: "standard"           # Set your Kubernetes storage class here.
+  accessModes:
+    - ReadWriteOnce
+  size: 2Gi                          # Persistent storage volume size.
+
+# Disabling Zookeeper as KRaft does not require it
+zookeeper:
+  enabled: false
+
+# KRaft Mode Configuration
+kraft:
+  enabled: true
+  clusterId: "vKaEBaltQuqktgAA3wkccA"  # Unique cluster ID for KRaft mode.
+  controller.quorum.voters: "0@cluster-kafka-controller-0.cluster-kafka-controller-headless.default.svc.cluster.local:9093,1@cluster-kafka-controller-1.cluster-kafka-controller-headless.default.svc.cluster.local:9093,2@cluster-kafka-controller-2.cluster-kafka-controller-headless.default.svc.cluster.local:9093"
+
+# Listener Configuration
+listeners:
+  client:
+    name: CLIENT
+    containerPort: 9092
+    protocol: PLAINTEXT
+  controller:
+    name: CONTROLLER
+    containerPort: 9093
+    protocol: PLAINTEXT
+  interbroker:
+    name: INTERNAL
+    containerPort: 9094
+    protocol: PLAINTEXT
+  external:
+    name: EXTERNAL
+    containerPort: 9095
+    protocol: PLAINTEXT
+
+advertisedListeners:
+  - CLIENT://cluster-kafka-controller-0.cluster-kafka-controller-headless.default.svc.cluster.local:9092
+  - CONTROLLER://cluster-kafka-controller-0.cluster-kafka-controller-headless.default.svc.cluster.local:9093
+  - CLIENT://cluster-kafka-controller-1.cluster-kafka-controller-headless.default.svc.cluster.local:9092
+  - CONTROLLER://cluster-kafka-controller-1.cluster-kafka-controller-headless.default.svc.cluster.local:9093
+  - CLIENT://cluster-kafka-controller-2.cluster-kafka-controller-headless.default.svc.cluster.local:9092
+  - CONTROLLER://cluster-kafka-controller-2.cluster-kafka-controller-headless.default.svc.cluster.local:9093
+
+securityProtocolMap: "CLIENT:PLAINTEXT,CONTROLLER:PLAINTEXT,INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT"
+

@@ -1,0 +1,95 @@
+
+# This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
+replicaCount: 1
+
+# This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
+image:
+  repository: amtrbouaro/atm-user-management-service
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+# This is for the secretes for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+#This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
+serviceAccount:
+  create: false # Specifies whether a service account should be created
+  automount: true # Automatically mount a ServiceAccount's API credentials?
+  annotations: {} # Annotations to add to the service account
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+# This is for setting Kubernetes Annotations to a Pod.
+# For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+podAnnotations: {}
+podLabels: {}
+podSecurityContext: {}
+# fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+# runAsUser: 1000
+
+# This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
+service:
+  type: ClusterIP
+  port: 8884
+  targetPort: 8884
+
+#This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+postgresql:
+  enabled: true
+  global:
+    postgresql:
+      postgresqlPassword: admin
+      postgresqlUsername: admin
+      postgresqlDatabase: atm-microservices-db
+      #      auth:
+      #        username: "admin"
+      #        password: "admin"
+      #        database: "atm-microservices-db"
+      servicePort: 4004
+
+  livenessProbe:
+    enabled: false
+  readinessProbe:
+    enabled: false
+
+
+env:
+  EUREKA_SERVER_DEFAULT_ZONE: http://atm-discovery-server.atm-microservices.svc.cluster.local:8882/eureka/
+  EUREKA_INSTANCE_HOSTNAME: atm-discovery-server.atm-microservices.svc.cluster.local
+  ZIPKIN_TRACING_ENDPOINT: http://atm-zipkin.atm-microservices.svc.cluster.local:9411
+  SERVICE_NAME: atm-user-management-service
+  EXTERNAL_BANK_API_NAME: cyclos-api
+  EXTERNAL_BANK_API_BASE_URL: https://cyclos.amalitech-dev.net/bankatmcore/api/
+  SERVER_PORT: 8884
+  IPINFO_ACCESS_TOKEN: bb97ef9c4187b1
+  CONFIG_SERVER_URL: "http://atm-config-server.atm-microservices.svc.cluster.local:8881"
+  SPRING_PROFILES_ACTIVE: "user-management-service-dev"
+# Not using
+  DATASOURCE_URL: "jdbc:postgresql://postgresql.atm-microservices.svc.cluster.local:5432/atm-microservices-db"
+  DATABASE_USERNAME: admin
+  DATABASE_PASSWORD: admin
+# Using
+  DB_HOST: postgresql.atm-microservices.svc.cluster.local
+
+  KAFKA_SERVERS: "atm-kafka.atm-microservices.svc.cluster.local:9092"
+  JWT_ACCESS_SECRET_KEY: asdfSFS34wfsdfsdfSDSD32dfsddDDerQSNCK34SOWEK5354fdgdf4
+  JWT_REFRESH_SECRET_KEY: asdfSFS34wfsdfsdfSDSD32dfsddDDerQSNCK34SOWEK5354fdgdf4
+  JWT_ACCESS_TOKEN_EXPIRATION: 300000
+  JWT_REFRESH_TOKEN_EXPIRATION: 600000

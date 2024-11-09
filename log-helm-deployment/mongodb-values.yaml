@@ -1,0 +1,13 @@
+mongodb:
+  fullnameOverride: atm-log-management-service-mongodb-server
+  auth:
+    enabled: true
+    rootPassword: secretPassword
+    username: admin
+    password: adminPassword
+    database: atm-log-management-service-mongodb
+  primary:
+    persistence:
+      enabled: true
+      storageClass: standard
+      size: 3Gi
