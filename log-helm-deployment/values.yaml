@@ -80,6 +80,6 @@ env:
   # MongoDB Configuration
   MONGODB_USERNAME: "admin"
   MONGODB_PASSWORD: "adminPassword"
-  MONGODB_HOST: atm-log-management-service-mongodb-server
+  MONGODB_HOST: atm-log-management-service-mongodb-server.atm-microservices.svc.cluster.local
   MONGODB_PORT: 27017
   MONGODB_DATABASE: "atm-log-management-service-mongodb"

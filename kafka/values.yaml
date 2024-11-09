@@ -61,10 +61,15 @@ kafka:
       protocol: PLAINTEXT
   broker:
     replicaCount: 2
+    livenessProbe:
+      enabled: false
+    readinessProbe:
+      enabled: false
   # KRaft Mode Configuration (Disabled for ZooKeeper)
   kraft:
     enabled: false
     # clusterId is not required when KRaft is disabled
+
 
   # Health checks for better stability
   livenessProbe:
