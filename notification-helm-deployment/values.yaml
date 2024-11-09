@@ -59,7 +59,8 @@ env:
   ZIPKIN_TRACING_ENDPOINT: http://atm-zipkin.atm-microservices.svc.cluster.local:9411
   SERVICE_NAME: atm-notification-management-service
   SERVER_PORT: 8886
+  KAFKA_SERVERS: http://atm-kafka.atm-microservices.svc.cluster.local:9092
   CONFIG_SERVER_URL: "http://atm-config-server.atm-microservices.svc.cluster.local:8881"
   SPRING_PROFILES_ACTIVE: "notification-service-dev"
-
+  JWT_ACCESS_SECRET_KEY: asdfSFS34wfsdfsdfSDSD32dfsddDDerQSNCK34SOWEK5354fdgdf4
 

@@ -88,7 +88,7 @@ env:
 # Using
   DB_HOST: postgresql.atm-microservices.svc.cluster.local
 
-  KAFKA_SERVERS: "atm-kafka.atm-microservices.svc.cluster.local:9092"
+  KAFKA_SERVERS: "http://atm-kafka.atm-microservices.svc.cluster.local:9092"
   JWT_ACCESS_SECRET_KEY: asdfSFS34wfsdfsdfSDSD32dfsddDDerQSNCK34SOWEK5354fdgdf4
   JWT_REFRESH_SECRET_KEY: asdfSFS34wfsdfsdfSDSD32dfsddDDerQSNCK34SOWEK5354fdgdf4
   JWT_ACCESS_TOKEN_EXPIRATION: 300000
