@@ -33,6 +33,7 @@ kafka:
     size: 2Gi  # Disk space per broker
     mountPath: /bitnami/kafka
     existingClaim: ""
+
   volumePermissions:
     enabled: true
   # Enable ZooKeeper
@@ -43,7 +44,7 @@ kafka:
     persistence:
       enabled: true
       accessModes: ["ReadWriteOnce"]
-      storageClass: "standard"
+      storageClass: "hostpath"
       size: 2Gi  # Disk space for ZooKeeper storage
       dataLogDir:
         size: 1Gi  # Separate storage for transaction logs (optional)
