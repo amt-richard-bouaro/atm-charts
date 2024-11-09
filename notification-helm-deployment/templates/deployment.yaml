@@ -52,9 +52,11 @@ spec:
             - name: SERVER_PORT
               value: "{{ .Values.env.SERVER_PORT }}"
             - name: CONFIG_SERVER_URL
-              value: "{{ .Values.env.CONFIG_SERVER_URL }}"
+              value: "{{ .Values.env.KAFKA_SERVERS }}"
             - name: SPRING_PROFILES_ACTIVE
               value: "{{ .Values.env.SPRING_PROFILES_ACTIVE }}"
+            - name: KAFKA_SERVERS
+              value: "{{ .Values.env.KAFKA_SERVERS }}"
             - name: JWT_ACCESS_SECRET_KEY
               value: "{{ .Values.env.JWT_ACCESS_SECRET_KEY}}"
           livenessProbe:
