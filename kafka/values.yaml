@@ -3,7 +3,7 @@ kafka:
   # Kafka configuration on Kubernetes with ZooKeeper
 
   # Cluster Configuration
-  replicaCount: 3 # Number of Kafka broker replicas for high availability
+  replicaCount: 2 # Number of Kafka broker replicas for high availability
 
   # Authentication
   auth:
@@ -29,7 +29,7 @@ kafka:
   persistence:
     enabled: true
     accessModes: ["ReadWriteOnce"]
-    storageClass: "standard"  # Set to your Kubernetes storage class
+    storageClass: "hostpath"  # Set to your Kubernetes storage class
     size: 2Gi  # Disk space per broker
     mountPath: /bitnami/kafka
     existingClaim: ""
@@ -60,7 +60,7 @@ kafka:
     external:
       protocol: PLAINTEXT
   broker:
-    replicaCount: 3
+    replicaCount: 2
   # KRaft Mode Configuration (Disabled for ZooKeeper)
   kraft:
     enabled: false
